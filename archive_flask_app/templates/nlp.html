@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Genre Word Cloud{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="card p-4 mx-auto" style="max-width: 700px">
+    <h1 class="mb-3 text-center">Genre Word Cloud (TF-IDF)</h1>
+
+    <form id="nlpForm" method="POST" class="row gy-3">
+      <div class="col-12">
+        <label class="form-label" for="genre">Select a genre</label>
+        <select id="genre" name="genre" class="form-select">
+          {% for g in genres %}
+            <option value="{{ g }}" {% if g == chosen %}selected{% endif %}>{{ g }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-12 text-center">
+        <button class="btn btn-primary px-5">Generate</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if cloud_html %}
+  <div class="container my-5 text-center">
+    {{ cloud_html|safe }}
+  </div>
+{% endif %}
+
+<!-- ─── Form loading overlay ─────────────────────────────── -->
+<div id="formLoadingOverlay" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75 z-3
+            d-flex flex-column justify-content-center align-items-center">
+  <div class="spinner-border text-primary" role="status"></div>
+  <p class="mt-3 fw-semibold">Generating word cloud…</p>
+</div>
+
+<script>
+  const nlpForm = document.getElementById("nlpForm");
+  const formOverlay = document.getElementById("formLoadingOverlay");
+  nlpForm?.addEventListener("submit", () => {
+    formOverlay.classList.remove("d-none");
+  });
+</script>
+
+{% endblock %}

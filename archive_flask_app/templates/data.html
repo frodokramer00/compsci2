@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset Info{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="fw-bold">Netflix Dataset Overview</h1>
+    <a href="/download/netflix_titles.csv" class="btn btn-primary">Download Dataset</a>
+  </div>
+
+  <p>This dataset contains metadata on movies and TV shows available on Netflix as of 2021. It was sourced from <a href="https://www.kaggle.com/shivamb/netflix-shows" target="_blank">Kaggle</a>.</p>
+  <p>Before analysis, we dropped rows where <code>cast</code> is missing to ensure accurate actor-based visualizations. This reduced the data from <strong>8,807</strong> to <strong>7,982</strong> entries.</p>
+  <p>There are a total of <strong>36,439 unique actors</strong> in the cleaned dataset. The most frequently occurring genre is <strong>International Movies</strong>, which appears <strong>2,574</strong> times.</p>
+
+  Here is our explainer notebook: <a href="https://nbviewer.org/github/frodokramer00/compsci2/blob/main/Explainer%20notebook.ipynb" target="_blank">Explainer Notebook</a>
+
+  <h4 class="mt-4">Key Columns Used</h4>
+  <ul>
+    <li><strong>title</strong>: The name of the movie or TV show.</li>
+    <li><strong>type</strong>: Indicates whether the title is a Movie or a TV Show.</li>
+    <li><strong>cast</strong>: A list of main actors featured in the title.</li>
+    <li><strong>country</strong>: Country of origin or availability.</li>
+    <li><strong>release_year</strong>: The year the title was released.</li>
+    <li><strong>listed_in</strong>: Categories or genres the title falls under.</li>
+    <li><strong>description</strong>: A short summary or synopsis of the content.</li>
+  </ul>
+
+  <h4 class="mt-5">Dataset Preview (First 10 Rows)</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered table-sm">
+      <thead class="table-light">
+        <tr>
+          <th>Title</th>
+          <th>Type</th>
+          <th>Cast</th>
+          <th>Country</th>
+          <th>Release Year</th>
+          <th>Genres</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in preview_rows %}
+        <tr>
+          <td>{{ row.title }}</td>
+          <td>{{ row.type }}</td>
+          <td>{{ row.cast }}</td>
+          <td>{{ row.country }}</td>
+          <td>{{ row.release_year }}</td>
+          <td>{{ row.listed_in }}</td>
+          <td>{{ row.description }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
